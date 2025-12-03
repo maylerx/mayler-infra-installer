@@ -1,1 +1,52 @@
-eval "$(wget -qO- https://raw.githubusercontent.com/maylerx/mayler-infra-installer/main/boot.sh)"
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+REPO="https://github.com/maylerx/mayler-infra-installer.git"
+TARGET_DIR="$HOME/.local/share/infra-installer"
+REF="${FREETECH_REF:-main}"
+
+
+ascii_art='''
+███████╗██████╗ ███████╗███████╗████████╗██████╗██╗ ██╗
+██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║ ██║
+█████╗ ██████╔╝█████╗ ███████╗ ██║ ██████╔╝███████║
+██╔══╝ ██╔══██╗██╔══╝ ╚════██║ ██║ ██╔══██╗██╔══██║
+███████╗██║ ██║███████╗███████║ ██║ ██║ ██║██║ ██║
+╚══════╝╚═╝ ╚═╝╚══════╝╚══════╝ ╚═╝ ╚═╝ ╚═╝╚═╝ ╚═╝
+
+
+FreeTech — InfraComp Installer (Remote Bootstrap)
+'''
+
+
+printf "%s\n" "$ascii_art"
+echo "Iniciando..."
+
+
+# dependencias minimas
+sudo apt-get update -y >/dev/null
+sudo apt-get install -y git curl >/dev/null
+
+
+# clonar (depth 1)
+rm -rf "$TARGET_DIR"
+if git clone --depth 1 "$REPO" "$TARGET_DIR" >/dev/null 2>&1; then
+echo "Repo clonado en $TARGET_DIR"
+else
+echo "Error al clonar $REPO"
+exit 1
+fi
+
+
+# cambiar a referencia si existe remotamente
+if git -C "$TARGET_DIR" ls-remote --heads origin "$REF" | grep -q "$REF"; then
+git -C "$TARGET_DIR" fetch --depth 1 origin "$REF" >/dev/null
+git -C "$TARGET_DIR" checkout -q "$REF"
+else
+echo "Nota: la referencia '$REF' no existe en remoto. Usando rama por defecto."
+fi
+
+
+# ejecutar installer desde su lugar (garantiza rutas relativas funcionen)
+bash "$TARGET_DIR/installer.sh" "$@"
