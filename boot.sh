@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 ascii_art='________                  __        ___.
@@ -28,9 +27,10 @@ rm -rf ~/.local/share/infra-installer
 
 git clone https://github.com/maylerx/mayler-infra-installer.git ~/.local/share/infra-installer >/dev/null
 
-if [[ $FREETECH_REF != "master" ]]; then
+# Checkout opcional (solo si usas ramas alternativas)
+if [[ $FREETECH_REF != "main" ]]; then
     cd ~/.local/share/infra-installer
-    git fetch origin "${FREETECH_REF:-stable}" && git checkout "${FREETECH_REF:-stable}"
+    git fetch origin "${FREETECH_REF:-main}" && git checkout "${FREETECH_REF:-main}"
     cd -
 fi
 
