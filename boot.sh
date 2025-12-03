@@ -33,8 +33,8 @@ git clone https://github.com/maylerx/mayler-infra-installer.git ~/.local/share/i
 
 # si se define FREETECH_REF y existe en remoto, cambiar
 if git -C ~/.local/share/infra-installer ls-remote --heads origin "${FREETECH_REF:-main}" | grep -q "${FREETECH_REF:-main}"; then
-git -C ~/.local/share/infra-installer fetch --depth 1 origin "${FREETECH_REF:-main}" >/dev/null
-git -C ~/.local/share/infra-installer checkout -q "${FREETECH_REF:-main}"
+    git -C ~/.local/share/infra-installer fetch --depth 1 origin "${FREETECH_REF:-main}" >/dev/null
+    git -C ~/.local/share/infra-installer checkout -q "${FREETECH_REF:-main}"
 fi
 
 
