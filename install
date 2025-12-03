@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-eval "$(wget -qO- https://raw.githubusercontent.com/maylerx/mayler-infra-installer/main/boot.sh)"
 
 set -euo pipefail
 
