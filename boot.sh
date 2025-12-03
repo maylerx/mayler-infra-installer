@@ -2,14 +2,12 @@
 
 set -e
 
-ascii_art='███████╗██████╗ ███████╗███████╗████████╗██████╗██╗  ██╗
-██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║  ██║
-█████╗  ██████╔╝█████╗  ███████╗   ██║   ██████╔╝███████║
-██╔══╝  ██╔══██╗██╔══╝  ╚════██║   ██║   ██╔══██╗██╔══██║
-███████╗██║  ██║███████╗███████║   ██║   ██║  ██║██║  ██║
-╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝
-
-             FreeTech – InfraComp Installer
+ascii_art='________                  __        ___.
+\_____  \   _____ _____  |  | ____ _\_ |__
+ /   |   \ /     \\__   \ |  |/ /  |  \ __ \
+/    |    \  Y Y  \/ __ \|    <|  |  / \_\ \
+\_______  /__|_|  (____  /__|_ \____/|___  /
+        \/      \/     \/     \/         \/
 '
 
 echo -e "$ascii_art"
@@ -26,15 +24,15 @@ sudo apt-get install -y git >/dev/null
 # CLONACIÓN DEL REPO
 # ------------------------------------------
 echo "Clonando FreeTech Installer..."
-rm -rf ~/.local/share/freetech
+rm -rf ~/.local/share/infra-installer
 
-git clone https://github.com/tuusuario/freetech.git ~/.local/share/freetech >/dev/null
+git clone https://github.com/maylerx/mayler-infra-installer.git ~/.local/share/infra-installer >/dev/null
 
 if [[ $FREETECH_REF != "master" ]]; then
-    cd ~/.local/share/freetech
+    cd ~/.local/share/infra-installer
     git fetch origin "${FREETECH_REF:-stable}" && git checkout "${FREETECH_REF:-stable}"
     cd -
 fi
 
 echo "Iniciando instalador..."
-source ~/.local/share/freetech/installer.sh
+source ~/.local/share/infra-installer/installer.sh
