@@ -32,19 +32,19 @@ sudo apt-get install -y git curl >/dev/null
 # clonar (depth 1)
 rm -rf "$TARGET_DIR"
 if git clone --depth 1 "$REPO" "$TARGET_DIR" >/dev/null 2>&1; then
-echo "Repo clonado en $TARGET_DIR"
+    echo "Repo clonado en $TARGET_DIR"
 else
-echo "Error al clonar $REPO"
-exit 1
+    echo "Error al clonar $REPO"
+    exit 1
 fi
 
 
 # cambiar a referencia si existe remotamente
 if git -C "$TARGET_DIR" ls-remote --heads origin "$REF" | grep -q "$REF"; then
-git -C "$TARGET_DIR" fetch --depth 1 origin "$REF" >/dev/null
-git -C "$TARGET_DIR" checkout -q "$REF"
+    git -C "$TARGET_DIR" fetch --depth 1 origin "$REF" >/dev/null
+    git -C "$TARGET_DIR" checkout -q "$REF"
 else
-echo "Nota: la referencia '$REF' no existe en remoto. Usando rama por defecto."
+    echo "Nota: la referencia '$REF' no existe en remoto. Usando rama por defecto."
 fi
 
 
