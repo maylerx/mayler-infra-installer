@@ -1,1 +1,1 @@
-eval "$(wget -qO- https://github.com/maylerx/mayler-infra-installer/blob/main/boot.sh)"
+eval "$(wget -qO- https://raw.githubusercontent.com/maylerx/mayler-infra-installer/main/boot.sh)"
