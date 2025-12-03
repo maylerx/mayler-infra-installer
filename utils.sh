@@ -32,30 +32,30 @@ EOF
 
 
 spinner() {
-local pid=$!
-local delay=0.1
-local spinstr='|/-\\'
-while kill -0 "$pid" 2>/dev/null; do
-local temp=${spinstr#?}
-printf " [%c] " "$spinstr"
-spinstr=$temp${spinstr%"$temp"}
-sleep "$delay"
-printf "\b\b\b\b\b\b"
-done
+    local pid=$!
+    local delay=0.1
+    local spinstr='|/-\\'
+    while kill -0 "$pid" 2>/dev/null; do
+        local temp=${spinstr#?}
+        printf " [%c] " "$spinstr"
+        spinstr=$temp${spinstr%"$temp"}
+        sleep "$delay"
+        printf "\b\b\b\b\b\b"
+    done
 }
 
 
 require_root() { if [[ $EUID -ne 0 ]]; then error "Este script debe ejecutarse como root."; exit 1; fi }
 require_command() { if ! command -v "$1" &>/dev/null; then error "Falta comando: $1"; exit 1; fi }
 check_os() {
-if [[ -f /etc/os-release ]]; then
-. /etc/os-release
-if [[ "$ID" != "ubuntu" ]]; then
-warn "Detectado: $ID. Este instalador está pensado para Ubuntu.";
-fi
-else
-error "No se detecta /etc/os-release"; exit 1
-fi
+    if [[ -f /etc/os-release ]]; then
+        . /etc/os-release
+        if [[ "$ID" != "ubuntu" ]]; then
+            warn "Detectado: $ID. Este instalador está pensado para Ubuntu.";
+        fi
+    else
+        error "No se detecta /etc/os-release"; exit 1
+    fi
 }
 
 
