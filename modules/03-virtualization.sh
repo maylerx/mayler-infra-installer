@@ -1,27 +1,12 @@
 #!/usr/bin/env bash
-module_name="virtualization"
-
-
 module_install() {
-log "Instalando KVM, Libvirt y herramientas de virtualización..."
-
-
+log "Instalando KVM/libvirt..."
 apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
-systemctl enable --now libvirtd
-
-
-echo "{\"module\": \"virtualization\", \"packages\": [\"qemu-kvm\", \"libvirt-daemon-system\", \"libvirt-clients\", \"bridge-utils\", \"virt-manager\"]}" \
-> "manifests/virtualization.json"
-
-
-ok "Virtualización instalada."
+systemctl enable --now libvirtd || true
+echo "{\"module\":\"virtualization\"}" > "$(dirname "${BASH_SOURCE[0]}")/../manifests/virtualization.json"
 }
-
-
 module_rollback() {
-log "Rollback del módulo de virtualización..."
-apt remove -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
-systemctl disable --now libvirtd
-rm -f manifests/virtualization.json
-ok "Rollback completado para virtualización."
+apt remove -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager || true
+systemctl disable --now libvirtd || true
+rm -f "$(dirname "${BASH_SOURCE[0]}")/../manifests/virtualization.json"
 }
