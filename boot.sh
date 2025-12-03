@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+# ----------------------------------------
+# AUTO-ELEVACIÓN A ROOT
+# ----------------------------------------
+if [ "$EUID" -ne 0 ]; then
+  echo "[i] Elevando privilegios..."
+  exec sudo bash "$0" "$@"
+fi
+
+
+
 set -euo pipefail
 
 
