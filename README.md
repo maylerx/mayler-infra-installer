@@ -22,6 +22,6 @@ Instalador modular inspirado en Omakub para preparar entornos de prácticas.
 
 
 ```bash
-git clone https://github.com/maylerx/mayler-infra-installer
-cd mayler-infra-installer
-sudo bash installer.sh
+wget -qO install https://raw.githubusercontent.com/maylerx/mayler-infra-installer/main/install
+sudo bash install
+
